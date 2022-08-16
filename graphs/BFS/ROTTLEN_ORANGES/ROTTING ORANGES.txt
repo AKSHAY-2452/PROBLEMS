@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        
+        int n = grid.size();//no. of rows
+        int m = grid[0].size();//no. of columns
+        
+        // structure of queue  {{r,c},t}
+        vector<vector<int>> vis(n,vector<int>(m,0)); 
+        queue<pair<pair<int,int>,int>> q;
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<m;j++){
+                if(grid[i][j] == 2){
+                    q.push({{i,j},0});
+                    vis[i][j] = 1;
+                }
+            }
+        }
+        
+        //apply bfs
+        int tm = 0;
+        vector<int> drow = {-1,0,1,0};
+        vector<int> dcol = {0,1,0,-1};
+        while(!q.empty()){
+            int crow = q.front().first.first; //CURRENT ROW
+            int ccol = q. front().first.second;
+            int ct = q.front().second;//CURRENT TIME
+            tm = max(ct,tm);
+            q.pop();
+            for(int i = 0;i<4;i++){
+                int nrow = crow + drow[i];//NEW ROW
+                int ncol = ccol + dcol[i];
+                if(nrow>=0 && ncol>=0 && nrow<n && ncol<m && grid[nrow][ncol] == 1 && vis[nrow][ncol] == 0)
+                {
+                    q.push({{nrow,ncol},ct+1});
+                    vis[nrow][ncol] = 1;
+                }
+            }
+        }
+        
+        //check if any non-rotten left
+        for(int i = 0;i<n;i++){
+            for(int j = 0;j<m;j++){
+                if(grid[i][j] == 1 && vis[i][j] != 1) return -1;
+            }
+        }
+        
+        return tm;
+        
+    }
+};
+
+SIMILAR PROBLEMS:-
+1.) DETONATE BOMBS :- LEETCODE_2101
+2.) ESCAPING SPREAD FIRE :- LEETCODE_2258
