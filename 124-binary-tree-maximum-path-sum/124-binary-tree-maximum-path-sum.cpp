@@ -31,3 +31,7 @@ public:
         return res;
     }
 };
+
+//if question states maximum path sum between leaf to leaf 
+//then solution is same except in temp we write temp = max(l,r)+root->val, here we are not comparing with root->val because if we take anything from l,r then it
+//includes leaf automatically
