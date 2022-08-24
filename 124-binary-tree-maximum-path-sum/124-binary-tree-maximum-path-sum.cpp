@@ -18,7 +18,7 @@ class Solution {
         int r = solve(root->right,res);
         
         //induction
-        int temp = max(0,max(l,r)) + root->val; // msx(0,) is to filter negative values
+        int temp = max(root->val+max(l,r),root->val); //we have taken only root->val because if both child's are negative then there is no use
         int ans = max(temp,root->val + l + r);
         res = max(res,ans);
         return temp;
