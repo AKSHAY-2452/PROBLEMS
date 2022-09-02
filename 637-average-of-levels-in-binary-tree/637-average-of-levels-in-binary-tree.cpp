@@ -10,42 +10,29 @@
  * };
  */
 class Solution {
-    
-    int levelof(TreeNode* root){
-        if(root == NULL) return 0;
-        
-        int a = levelof(root->left);
-        int b = levelof(root->right);
-        
-        return 1+max(a,b);
-        
-    }
-    
-    void solve(TreeNode* root,int level,vector<vector<double>> &temp){
-        if(root == NULL) return;
-        temp[level].push_back(root->val);
-        
-        solve(root->right,level+1,temp);
-        solve(root->left,level+1,temp);
-        return;
-    }
-    
 public:
     vector<double> averageOfLevels(TreeNode* root) {
-        int n = 0;
-        n = levelof(root);
-        
-        vector<double> ans;
-        vector<vector<double>> temp(n);
-        int level = 0;
-        solve(root,level,temp);
-        
-        for(int i = 0;i<temp.size();i++){
-            double tempo = 0;
-            for(int j = 0;j<temp[i].size();j++){
-                tempo += temp[i][j]; 
-            }
-            ans.push_back(tempo/temp[i].size());
+        double helper=0;
+        vector<double>ans;
+        queue<TreeNode*>q;
+        q.push(root);
+        int n=0;
+        auto *temp=root;
+        while(!q.empty()){
+            n=q.size();
+            int k=n;
+            helper=0;
+            while(k--){
+                temp=q.front();
+                helper+=temp->val;
+                q.pop();
+                if(temp->left)
+                    q.push(temp->left);
+                if(temp->right)
+                    q.push(temp->right);
+                    }
+            ans.push_back(double(helper/n));
+            
         }
         return ans;
     }
