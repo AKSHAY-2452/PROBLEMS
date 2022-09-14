@@ -8,13 +8,18 @@ public:
     }
     
     void addNum(int num) {
-        maxHeap.push(num);
-        minHeap.push(maxHeap.top());
-        maxHeap.pop();
+        if(minHeap.size() < maxHeap.size()) minHeap.push(num);
+        else maxHeap.push(num);
         
-        if(maxHeap.size() < minHeap.size()){
-            maxHeap.push(minHeap.top());
+        if(minHeap.size() == 0) return;
+        if(minHeap.top()<maxHeap.top()){
+            auto a = minHeap.top();
             minHeap.pop();
+            auto b = maxHeap.top();
+            maxHeap.pop();
+            
+            maxHeap.push(a);
+            minHeap.push(b);
         }
     }
     
